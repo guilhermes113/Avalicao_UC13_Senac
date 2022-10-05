@@ -8,10 +8,10 @@ namespace CadastroAluno.Contracts
 {
     public interface IAlunoRepository
     {
-        Task<List<Aluno>> Index();
-        Task<Aluno> Details(int id);
-        Task<Aluno> Create(Aluno cliente);
-        Task<Aluno> Edit(int id,Aluno cliente);
-        Task Delete(int id);
+        List<Aluno>Index();
+        Aluno Details(int? id);
+        Aluno Create(Aluno cliente);
+        Aluno Edit(int? id,Aluno cliente);
+        int Delete(int id);
     }
 }

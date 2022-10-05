@@ -17,34 +17,34 @@ namespace CadastroAluno.Repository
         {
             _context = context;
         }
-        public async Task<List<Aluno>> Index()
+        public  List<Aluno> Index()
         {
-            return await _context.Aluno.ToListAsync();
+            return  _context.Aluno.ToList();
         }
-        public async Task<Aluno> Details(int id)
+        public  Aluno Details(int? id)
         {
-            return await _context.Aluno.FindAsync(id);
+            return  _context.Aluno.Find(id);
         }
-        public async Task<Aluno> Create(Aluno aluno)
+        public  Aluno Create(Aluno aluno)
         {
-            await _context.Aluno.AddAsync(aluno);
-            await _context.SaveChangesAsync();
+             _context.Aluno.Add(aluno);
+             _context.SaveChanges();
             return aluno;
 
         }
-        public async Task<Aluno> Edit(int id,Aluno alunoAlterado)
+        public  Aluno Edit(int? id,Aluno alunoAlterado)
         {
             _context.Entry(alunoAlterado).State = EntityState.Modified;
             //_context.Clientes.Update(cliente);
-            await _context.SaveChangesAsync();
+             _context.SaveChanges();
             return alunoAlterado;
         }
-        public async Task Delete(int id)
+        public int Delete(int id)
         {
-            var alunoRemovido = await _context.Aluno.FirstOrDefaultAsync(a => a.Id == id);
+            var alunoRemovido =  _context.Aluno.FirstOrDefault(a => a.Id == id);
             //_context.Entry(id).State = EntityState.Deleted;
             _context.Aluno.Remove(alunoRemovido);
-            await _context.SaveChangesAsync();
+            return  _context.SaveChanges();
         }
     }
 }
