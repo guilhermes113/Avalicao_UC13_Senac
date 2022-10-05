@@ -7,14 +7,15 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CadastroAluno.Data;
 using CadastroAluno.Models;
+using CadastroAluno.Contracts;
 
 namespace CadastroAluno.Controllers
 {
     public class AlunosController : Controller
     {
-        private readonly CadastroAlunoContext _context;
+        private readonly IAlunoRepository _context;
 
-        public AlunosController(CadastroAlunoContext context)
+        public AlunosController(IAlunoRepository context)
         {
             _context = context;
         }
@@ -22,19 +23,18 @@ namespace CadastroAluno.Controllers
         // GET: Alunos
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Aluno.ToListAsync());
+            return View(await _context.Index());
         }
 
         // GET: Alunos/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(int id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var aluno = await _context.Aluno
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var aluno = await _context.Details(id);
             if (aluno == null)
             {
                 return NotFound();
@@ -58,8 +58,7 @@ namespace CadastroAluno.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(aluno);
-                await _context.SaveChangesAsync();
+                _context.Create(aluno);
                 return RedirectToAction(nameof(Index));
             }
             return View(aluno);
