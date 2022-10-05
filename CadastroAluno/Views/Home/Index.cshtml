@@ -1,8 +1,53 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿@model IEnumerable<Aluno>
+@Html.Partial("_NovoItem", "Alino")
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="row">
+    <div class="col-md-10 offset-md-1">
+
+        <h2 class="offset-5">
+            Alunos
+        </h2>
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Ações</th>
+                    <th>Nome</th>
+                    <th>Turma</th>
+                    <th>Média</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var aluno in Model)
+                {
+
+                    <tr>
+                        <td>
+                            <div class="d-flex flex-column">
+                                <a class="btn btn-success" asp-action="Edit" asp-route-id="@aluno.Id">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                    Editar
+                                </a>
+
+                                <a class="btn btn-primary mt-1" asp-action="Details" asp-route-id="@aluno.Id">
+                                    <i class="fa-solid fa-eye"></i>
+                                    Ver
+                                </a>
+
+                                <a class="btn btn-danger mt-1" asp-action="Delete" asp-route-id="@aluno.Id">
+                                    <i class="fa-solid fa-trash-can"></i>
+                                    Excluir
+                                </a>
+                            </div>
+                        </td>
+                        
+                        <td class="align-middle">@aluno.Nome</td>
+                        <td class="align-middle">@aluno.Turma</td>
+                        <td>class="align-middle">@aluno.Media</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
 </div>

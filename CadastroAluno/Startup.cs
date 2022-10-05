@@ -10,6 +10,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using CadastroAluno.Data;
+using CadastroAluno.Repository;
+using CadastroAluno.Contracts;
 
 namespace CadastroAluno
 {
@@ -27,8 +29,8 @@ namespace CadastroAluno
         {
             services.AddControllersWithViews();
 
-            services.AddDbContext<CadastroAlunoContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("CadastroAlunoContext")));
+            services.AddDbContext<CadastroAlunoContext>(options => options.UseSqlServer(Configuration.GetConnectionString("CadastroAlunoContext")));
+            services.AddScoped<IAlunoRepository, AlunoRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
