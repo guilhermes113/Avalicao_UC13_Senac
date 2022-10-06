@@ -27,7 +27,7 @@ namespace CadastroAluno.Controllers
         }
 
         // GET: Alunos/Details/5
-        public  IActionResult Details(int id)
+        public  IActionResult Create(int id)
         {
             if (id == null)
             {
