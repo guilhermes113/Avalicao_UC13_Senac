@@ -59,9 +59,11 @@ namespace CadastroAlunoTest
         {
 
             AlunosController controller = new AlunosController(_repository.Object);
+            //
             _repository.Setup(repo => repo.Details(1)).Returns(alunoValido);
 
-            var consulta = controller.Create(2);
+            var consulta = controller.Details(2);
+
             Assert.IsType<NotFoundResult>(consulta);
         }
         [Fact(DisplayName = "Aluno Inexistente BadRequest")]
@@ -69,7 +71,7 @@ namespace CadastroAlunoTest
         {
             AlunosController controller = new AlunosController(_repository.Object);
 
-            var consulta = controller.Create(-1);
+            var consulta = controller.Details(-1);
             //assert
             Assert.IsType<BadRequestResult>(consulta);
         }
@@ -114,11 +116,12 @@ namespace CadastroAlunoTest
         public void ValidaDados_RetornaResposta_NEgativo()
         {   ////Arrange
             AlunosController controller = new AlunosController(_repository.Object);
+            controller.ModelState.AddModelError("", "");
             //Action
-            _repository.Setup(repo => repo.Create(alunoValido2)).Returns(alunoValido2);
+            
             var result = controller.Create(alunoValido2);
             // Assert
-            _repository.Verify(repo => repo.Create(alunoValido2), Times.Once);
+            _repository.Verify(repo => repo.Create(alunoValido2), Times.Never);
             Assert.IsType<ViewResult>(result);
         }
 

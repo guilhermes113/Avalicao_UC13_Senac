@@ -25,7 +25,21 @@ namespace CadastroAluno.Controllers
         {
             return View( _context.Index());
         }
+        public IActionResult Details(int? id)
+        {
+            if (id == null || id < 1)
+            {
+                return BadRequest();
+            }
 
+            var aluno = _context.Details(id);
+            if (aluno == null)
+            {
+                return NotFound();
+            }
+
+            return View(aluno);
+        }
         // GET: Alunos/Details/5
         public  IActionResult Create(int id)
         {
@@ -58,6 +72,7 @@ namespace CadastroAluno.Controllers
         {
             if (ModelState.IsValid)
             {
+                 
                 _context.Create(aluno);
                 return RedirectToAction(nameof(Index));
             }
